@@ -21,7 +21,7 @@ pipeline {
 
     stage('Stop containers') {
       steps {
-        sh "docker stop --name nodeapp_test${env.BUILD_NUMBER} ${env.RepoDockerHub}/${env.NameContainer}:${env.BUILD_NUMBER}"
+        sh "docker stop nodeapp_test${env.BUILD_NUMBER}"
       }
     }
 
