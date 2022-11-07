@@ -9,9 +9,28 @@ pipeline {
 
     stage('Run') {
       steps {
-        sh "docker run -p 400${env.BUILD_NUMBER}:3000 -d --name nodeapp_test${env.BUILD_NUMBER} ${env.RepoDockerHub}/${env.NameContainer}:${env.BUILD_NUMBER}"
+        sh "docker run --rm -p 400${env.BUILD_NUMBER}:3000 -d --name nodeapp_test${env.BUILD_NUMBER} ${env.RepoDockerHub}/${env.NameContainer}:${env.BUILD_NUMBER}"
       }
     }
+
+    stage('CI') {
+      steps {
+        sh 'echo "hola mundo"'
+      }
+    }
+
+    stage('Stop containers') {
+      steps {
+        sh "docker stop --name nodeapp_test${env.BUILD_NUMBER} ${env.RepoDockerHub}/${env.NameContainer}:${env.BUILD_NUMBER}"
+      }
+    }
+
+    stage('Clean dangling images') {
+      steps {
+        sh "docker rmi ${env.RepoDockerHub}/${env.NameContainer}:${env.BUILD_NUMBER}"
+      }
+    }
+
 
     // stage('Login to Dockerhub') {
     //   steps {
@@ -24,12 +43,6 @@ pipeline {
     //     sh "docker push ${env.RepoDockerHub}/${env.NameContainer}:${env.BUILD_NUMBER}"
     //   }
     // }
-
-    stage('test') {
-      steps {
-        sh 'echo "hola mundo"'
-      }
-    }
 
   }
   environment {
