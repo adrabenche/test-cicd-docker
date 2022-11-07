@@ -13,18 +13,6 @@ pipeline {
       }
     }
 
-    // stage('Login to Dockerhub') {
-    //   steps {
-    //     sh "echo $Dockerhub_Credentials_PSW | docker login -u $Dockerhub_Credentials_USR --password-stdin"
-    //   }
-    // }
-
-    // stage('Push image to Dockerhub') {
-    //   steps {
-    //     sh "docker push ${env.RepoDockerHub}/${env.NameContainer}:${env.BUILD_NUMBER}"
-    //   }
-    // }
-
     stage('test') {
       steps {
         sh 'echo "hola mundo"'
@@ -35,6 +23,5 @@ pipeline {
   environment {
     RepoDockerHub = 'adrabencheeduit'
     NameContainer = 'nodeapp_edit'
-    Dockerhub_Credentials = credentials('docker-user')
   }
 }
