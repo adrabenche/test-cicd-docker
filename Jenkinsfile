@@ -49,6 +49,6 @@ pipeline {
   environment {
     RepoDockerHub = 'adrabencheeduit'
     NameContainer = 'nodeapp_edit'
-    Dockerhub_Credentials = credentials('docker-user')
+    // Dockerhub_Credentials = credentials('docker-user')
   }
 }
