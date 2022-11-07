@@ -9,8 +9,7 @@ pipeline {
 
     stage('Run') {
       steps {
-        sh "docker run -p 400${env.BUILD_NUMBER}:3000 -d --name nodeapp_test${env.BUILD_NUMBER} ${env.RepoDockerHub}/${env.NameContainer}:${env.BUILD_NUMBER}"
-        // sh "docker run --rm -p 400${env.BUILD_NUMBER}:3000 -d --name nodeapp_test${env.BUILD_NUMBER} ${env.RepoDockerHub}/${env.NameContainer}:${env.BUILD_NUMBER}"
+        sh "docker run --rm -p 400${env.BUILD_NUMBER}:3000 -d --name nodeapp_test${env.BUILD_NUMBER} ${env.RepoDockerHub}/${env.NameContainer}:${env.BUILD_NUMBER}"
       }
     }
 
@@ -26,11 +25,11 @@ pipeline {
       }
     }
 
-    // stage('Clean dangling images') {
-    //   steps {
-    //     sh "docker rmi ${env.RepoDockerHub}/${env.NameContainer}:${env.BUILD_NUMBER}"
-    //   }
-    // }
+    stage('Clean dangling images') {
+      steps {
+        sh "docker rmi ${env.RepoDockerHub}/${env.NameContainer}:${env.BUILD_NUMBER}"
+      }
+    }
 
 
     // stage('Login to Dockerhub') {
@@ -46,6 +45,7 @@ pipeline {
     // }
 
   }
+  
   environment {
     RepoDockerHub = 'adrabencheeduit'
     NameContainer = 'nodeapp_edit'
